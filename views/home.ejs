@@ -5,8 +5,11 @@
 
 <% console.log(posts)  %>
 
-<% for (var i=0; i<posts.length; i++) {%>
-  <% console.log(posts[i].title); %>   
-<% }; %>
+
+
+<%const postsArray = ["a" , "b", "c"]; %>
+<% posts.forEach (function(post) { %>
+  <% console.log(posts.title) %>
+<% }); %>
 
 <%-include('partials/footer'); %>
