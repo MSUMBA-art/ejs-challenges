@@ -22,8 +22,11 @@ app.use(express.static("public"));
 let posts = [];
 
 app.get("/", function (req, res) {
-  res.render("home", { startingContent: homeStartingContent, posts: posts });
-  // console.log(posts);
+  res.render("home", {
+    startingContent: homeStartingContent,
+    posts: posts
+  });
+  
 });
 
 app.get("/about", function (req, res) {
@@ -54,11 +57,13 @@ app.get("/posts/:postName", function (req, res) {
     const storedTitle = _.lowerCase(post.title);
    
     if (storedTitle === requestedTitle) {
-      console.log("Match Found");
-    } else {
-      console.log("ooops")
+      res.render("post", {
+        title: post.title,
+        content: post.content
+      });
     }
-  } )
+
+  });
 });
 
 app.listen(3000, function () {
