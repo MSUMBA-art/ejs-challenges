@@ -2,6 +2,7 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose") // require mongoose
 const ejs = require("ejs");
 const _ = require("lodash");
 
@@ -18,6 +19,15 @@ app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+mongoose.connect("mongodb://localhost:27017/blogDB", { useNewUrlParser: true });// connect to database called blogDB
+
+const postSchema = { //Creating a new schema
+  title: String,
+  content: String
+};
+
+const Post = mongoose.model("Post", postSchema);// created mongoose model 
 
 let posts = [];
 
@@ -42,11 +52,11 @@ app.get("/compose", function (req, res) {
 });
 
 app.post("/compose", function (req, res) {
-  const post = {
+  const post = new Post({
     title: req.body.postTitle,
     content: req.body.postBody,
-  };
-  posts.push(post);
+  })
+  posts.save()
   res.redirect("/");
 });
 
